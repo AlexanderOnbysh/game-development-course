@@ -1,7 +1,7 @@
 from ..configurable import Configurable
 
 
-class MenuLabel(Configurable):
+class InterfaceLabel(Configurable):
     def __init__(self, type, text, x, y):
         super().__init__(type, x, y)
 

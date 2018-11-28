@@ -1,6 +1,6 @@
 image_selected:
   type: aimg
-  value: textures/MenuButton.png
+  value: textures/InterfaceButton.png
 image_highlighted:
   type: aimg
   value: textures/MenuButtonH.png
