@@ -1,6 +1,6 @@
 import pygame
 
-from .menu import Interface
+from .interface import Interface
 
 
 class Game:
@@ -8,7 +8,7 @@ class Game:
         self.running = True
         self.window = window
         self.clock = pygame.time.Clock()
-        self.menu = Interface(self)
+        self.interface = Interface(self)
 
     def run(self):
         while self.running:
@@ -21,7 +21,7 @@ class Game:
 
             # redraw screen
             self.window.clear()
-            self.menu.draw(self.window.screen)
+            self.interface.draw(self.window.screen)
 
     def quit(self):
         self.running = False
