@@ -38,7 +38,7 @@ class Configurable(Sprite):
 
         entries = deepcopy(config)
 
-        for img_fmt in ('image', 'image_s', 'image_h', 'image_d'):
+        for img_fmt in ('image', 'image_selected', 'image_highlighted', 'image_d'):
             if img_fmt in config:
                 type = config[img_fmt]['type']
                 if type == 'img':

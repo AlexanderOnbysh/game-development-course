@@ -1,7 +1,7 @@
-image_s:
+image_selected:
   type: aimg
   value: textures/MenuPauseButton.png
-image_h:
+image_highlighted:
   type: aimg
   value: textures/MenuPauseButtonH.png
 
