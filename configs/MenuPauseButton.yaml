@@ -1,0 +1,14 @@
+image_s:
+  type: aimg
+  value: textures/menu_pause_button.png
+image_h:
+  type: aimg
+  value: textures/menu_pause_button_h.png
+
+font_size: 20
+font_bold: 1
+font: arial
+
+color_red: 240
+color_green: 240
+color_blue: 240
