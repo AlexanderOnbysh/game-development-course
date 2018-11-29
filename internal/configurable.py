@@ -1,11 +1,12 @@
-from pygame.sprite import Sprite
-from pygame.rect import Rect
-import yaml
+from copy import deepcopy
+
 import pygame
-from copy import deepcopy as dc
+import yaml
+from pygame.rect import Rect
+from pygame.sprite import Sprite
 
 
-class Config(Sprite):
+class Configurable(Sprite):
     Cache = {}
 
     def __init__(self, name, x, y):
@@ -27,32 +28,17 @@ class Config(Sprite):
         else:
             self.rect = Rect(x, y, 32, 32)
 
-    def update_animation(self, delta):
-        if hasattr(self, "anim_source"):
-            self.anim_change_time -= delta
-
-            if self.anim_change_time < 0:
-                self.anim_change_time += self.anim_rate
-
-                self.anim_index += 1
-                if self.anim_index == len(self.anim_source):
-                    self.anim_index = 0
-
-                    if not hasattr(self, "anim_loop") or not self.anim_loop:
-                        self.kill()
-
-                self.image = self.anim_source[self.anim_index]
-
-    def load_config(self, name):
-        if name in Config.Cache.keys():
-            return Config.Cache[name]
+    @staticmethod
+    def load_config(name):
+        if name in Configurable.Cache.keys():
+            return Configurable.Cache[name]
 
         with open(f'configs/{name}.yaml', 'r') as f:
             config = yaml.load(f)
 
-        entries = dc(config)
+        entries = deepcopy(config)
 
-        for img_fmt in ('image', 'image_s', 'image_h', 'image_d'):
+        for img_fmt in ('image', 'image_selected', 'image_highlighted', 'image_d'):
             if img_fmt in config:
                 type = config[img_fmt]['type']
                 if type == 'img':
@@ -71,7 +57,7 @@ class Config(Sprite):
         if 'font' in config:
             entries['font'] = pygame.font.Font(pygame.font.match_font(config['font'], 'font_bold' in entries.keys()), entries['font_size'])
 
-        Config.Cache[name] = entries
+        Configurable.Cache[name] = entries
         return entries
 
     def apply_config(self, config):
