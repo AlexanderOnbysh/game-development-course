@@ -12,17 +12,14 @@ class Defense(Configurable):
         self.fire_time = 0
         self.target = None
 
-        if hasattr(self, "images"):
+        if hasattr(self, 'images'):
             self.image = self.images[0]
             self.rect = self.image.get_rect()
             self.rect.x = x
             self.rect.y = y
 
-        if hasattr(self, 'block'):
-            self.game.level.collision.block_rect(x, y, self.rect.width, self.rect.height)
-
     def update(self, delta):
-        if self.attack == "none":
+        if self.attack == 'none':
             return
 
         target = self.get_target()
@@ -32,9 +29,7 @@ class Defense(Configurable):
             self.fire_time -= self.attack_rate
 
             if target is not None and target != self.rect.center:
-
-                # Create the flash (if specified).
-                if hasattr(self, "flash_offset"):
+                if hasattr(self, 'flash_offset'):
                     self.game.explosions.add(DefenseLight(self.rect.center, target, self.flash_offset))
 
                 if self.attack_rate <= 0:
@@ -80,14 +75,14 @@ class Defense(Configurable):
 
 
 class DefenseLight(Configurable):
-    def __init__(self, defence_position, target, offset):
-        dx = target[0] - defence_position[0]
-        dy = target[1] - defence_position[1]
+    def __init__(self, defense_position, target, offset):
+        dx = target[0] - defense_position[0]
+        dy = target[1] - defense_position[1]
         magnitude = math.sqrt(dx * dx + dy * dy)
         dx *= (offset / magnitude)
         dy *= (offset / magnitude)
 
-        super().__init__("DefenseFlash", defence_position[0] + dx - 16, defence_position[1] + dy - 16)
+        super().__init__('DefenseFlash', defense_position[0] + dx - 16, defense_position[1] + dy - 16)
 
     def update(self, delta):
         super().update_animation(delta)
