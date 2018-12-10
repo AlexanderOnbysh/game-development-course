@@ -1,15 +1,21 @@
 import pygame
+from internal.menu import Menu
 
 
 class Game:
     def __init__(self, window):
-        self.running = None
+        self.menu = ...
 
+        self.running = None
         self.window = window
         self.clock = pygame.time.Clock()
-        self.defences = pygame.sprite.Group()
+        self.defenses = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.explosions = pygame.sprite.Group()
+        self.load_level()
+
+    def load_level(self):
+        self.menu = Menu(self)
 
     def run(self):
         self.running = True
@@ -19,17 +25,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if not self.menu.visible:
-                        self.place_defence(pygame.mouse.get_pos())
                     self.menu.clicked()
 
             self.menu.update()
+
             self.window.clear()
-            self.level.prefabs.draw(self.window.screen)
-            self.defences.draw(self.window.screen)
-            self.bullets.draw(self.window.screen)
-            self.wave.enemies.draw(self.window.screen)
-            self.explosions.draw(self.window.screen)
             self.menu.draw(self.window.screen)
 
     def quit(self):
