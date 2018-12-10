@@ -6,7 +6,15 @@ import pygame
 class Menu(Configurable):
 
     def __init__(self, game):
-        super().__init__("Menu", 0, 0)
+        super().__init__('Menu', 0, 0)
+
+        self.wave_label = ...
+        self.lives_label = ...
+        self.money_label = ...
+        self.sinternal_label = ...
+        self.defense_buttons = ...
+
+        self.component_next = ...
 
         self.game = game
         self.components = OrderedUpdates()
@@ -17,6 +25,30 @@ class Menu(Configurable):
     def show(self):
         self.visible = True
         self.show_main_screen()
+
+    def hide(self):
+        self.visible = False
+        self.clear()
+
+        self.defense_buttons = [
+            MenuButton(
+                self,
+                'MenuDefenseButton',
+                self.game.defence_prototypes[i].display_name,
+                (i + 1) * 64, 0,
+                lambda: self.game.select_defense((pygame.mouse.get_pos()[0] - 64) // 64)
+            )
+            for i in range(len(self.game.defense_prototypes))
+        ]
+
+        self.components.add(self.defense_buttons)
+        self.components.add(self.wave_label)
+        self.components.add(self.lives_label)
+        self.components.add(self.money_label)
+        self.components.add(self.sinternal_label)
+        self.components.add(MenuButton(self, 'MenuPauseButton', 'Menu', 1088, 0, self.show))
+
+        self.update()
 
     def clear(self):
         self.components.remove(self.components)
@@ -34,7 +66,7 @@ class Menu(Configurable):
         self.components.draw(screen)
 
     def add_button(self, text, callback):
-        button = MenuButton(self, "MenuButton", text, 0, self.component_next, callback)
+        button = MenuButton(self, 'MenuButton', text, 0, self.component_next, callback)
         button.rect.x = (self.rect.width - button.rect.width) / 2
 
         self.components.add(button)
@@ -47,16 +79,22 @@ class Menu(Configurable):
         self.clear()
 
         if self.game.level.time > 0:
-            self.add_button("Continue", self.hide)
-            self.add_button("Restart Game", lambda: self.game.load_level(self.game.level.name))
+            self.add_button('Continue', self.hide)
+            self.add_button('Restart Game', lambda: self.game.load_level(self.game.level.name))
         else:
-            self.add_button("Start Game", self.hide)
+            self.add_button('Start Game', self.hide)
 
-        self.add_button("Quit Game", self.game.quit)
+        self.add_button('Quit Game', self.game.quit)
+
+    def show_lose_screen(self):
+        self.show()
+        self.clear()
+        self.add_button('Game Over', None)
+        self.add_button('Restart Game', lambda: self.game.load_level(self.game.level.name))
 
 
 class MenuLabel(Configurable):
-    def __init__(self, type, text, x, y):
+    def __init__(self, _, type, text, x, y):
         super().__init__(type, x, y)
 
         self.text = text
@@ -68,7 +106,7 @@ class MenuLabel(Configurable):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        
+
     def update(self):
         if self.disabled:
             self.set_image(self.image_d)
@@ -80,7 +118,7 @@ class MenuLabel(Configurable):
     def set_text(self, text):
         if self.text != text:
             self.text = text
-            
+
             img = self.image_template
             self.image_template = None
             self.set_image(img)
@@ -91,22 +129,23 @@ class MenuLabel(Configurable):
 
         self.image_template = image
 
-        if hasattr(self, "font"):
+        if hasattr(self, 'font'):
             self.image = image.copy()
             self.render_text(self.image)
         else:
             self.image = image
-           
+
     def render_text(self, background):
         colour = (self.color_red, self.color_green, self.color_blue)
         rendered = self.font.render(self.text, True, colour)
-        dest = ((background.get_rect().width - rendered.get_rect().width) // 2, (background.get_rect().height - rendered.get_rect().height) // 2)
+        dest = ((background.get_rect().width - rendered.get_rect().width) // 2,
+                (background.get_rect().height - rendered.get_rect().height) // 2)
         background.blit(rendered, dest)
 
 
 class MenuButton(MenuLabel):
-    def __init__(self, type, text, x, y, callback):
-        super().__init__(type, text, x, y)
+    def __init__(self, menu, type, text, x, y, callback):
+        super().__init__(menu, type, text, x, y)
 
         self.callback = callback
         self.last_pressed = True
