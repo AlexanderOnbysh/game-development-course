@@ -1,8 +1,8 @@
 import pygame
 from pygame.sprite import OrderedUpdates
 
-from .button import Button
-from .label import Label
+from .button import InterfaceButton
+from .label import InterfaceLabel
 from ..configurable import Configurable
 
 
@@ -24,19 +24,19 @@ class Interface(Configurable):
         self.visible = False
         self.clear()
 
-        self.defence_buttons = [Button("interface/interface_defence_button", self.game.defence_prototypes[i].display_name, (i + 1) * 64, 0, lambda: self.game.select_defence((pygame.mouse.get_pos()[0] - 64) // 64)) for i in range(len(self.game.defence_prototypes))]
+        self.defence_buttons = [InterfaceButton("interface/interface_defence_button", self.game.defence_prototypes[i].display_name, (i + 1) * 64, 0, lambda: self.game.select_defence((pygame.mouse.get_pos()[0] - 64) // 64)) for i in range(len(self.game.defence_prototypes))]
         self.components.add(self.defence_buttons)
 
-        self.wave_label = Label("interface/interface_pause_button", "Wave", 448, 0)
-        self.lives_label = Label("interface/interface_pause_button", "Lives", 576, 0)
-        self.money_label = Label("interface/interface_pause_button", "Money", 704, 0)
-        self.score_label = Label("interface/interface_pause_button", "Score", 832, 0)
+        self.wave_label = InterfaceLabel("interface/interface_pause_button", "Wave", 448, 0)
+        self.lives_label = InterfaceLabel("interface/interface_pause_button", "Lives", 576, 0)
+        self.money_label = InterfaceLabel("interface/interface_pause_button", "Money", 704, 0)
+        self.score_label = InterfaceLabel("interface/interface_pause_button", "Score", 832, 0)
         self.components.add(self.wave_label)
         self.components.add(self.lives_label)
         self.components.add(self.money_label)
         self.components.add(self.score_label)
 
-        self.components.add(Button("interface/interface_pause_button", "Interface", 1088, 0, self.show))
+        self.components.add(InterfaceButton("interface/interface_pause_button", "Interface", 1088, 0, self.show))
 
         self.update()
 
@@ -60,7 +60,7 @@ class Interface(Configurable):
 
     def clicked(self):
         for component in self.components:
-            if isinstance(component, Button):
+            if isinstance(component, InterfaceButton):
                 component.clicked()
 
     def draw(self, screen):
@@ -70,7 +70,7 @@ class Interface(Configurable):
         self.components.draw(screen)
 
     def add_button(self, text, callback):
-        button = Button("interface/interface_button", text, 0, self.component_next, callback)
+        button = InterfaceButton("interface/interface_button", text, 0, self.component_next, callback)
         button.rect.x = (self.rect.width - button.rect.width) / 2
 
         self.components.add(button)
@@ -80,7 +80,7 @@ class Interface(Configurable):
         return button
 
     def add_level_button(self, level):
-        button = Button("interface/interface_level_" + level, level, 0, self.component_next, lambda: self.game.load_level(level))
+        button = InterfaceButton("interface/interface_level_" + level, level, 0, self.component_next, lambda: self.game.load_level(level))
         button.rect.x = (self.rect.width - button.rect.width) / 2
         
         self.components.add(button)
@@ -91,7 +91,7 @@ class Interface(Configurable):
         self.clear()
 
         self.add_button("Start Game", self.hide)
-        if self.game.level.time > 0:
+        if False:
             self.add_button("Continue", self.hide)
             self.add_button("Restart Game", lambda: self.game.load_level(self.game.level.name))
         else:
