@@ -8,7 +8,7 @@ color_blue: 240
 
 image_s:
   type: aimg
-  value: default.png # TODO: change png file
+  value: textures/interface/MenuPauseButton.png
 image_h:
   type: aimg
-  value: default.png # TODO: change png file
+  value: textures/interface/MenuPauseButtonH.png

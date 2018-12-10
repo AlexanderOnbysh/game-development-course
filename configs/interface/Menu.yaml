@@ -1,4 +1,4 @@
 top: 165
 image:
   type: aimg
-  value: default.png # TODO: change png file
+  value: textures/interface/Menu.png
