@@ -15,12 +15,12 @@ class Configurable(Sprite):
         self.config = self.load_config(name)
         self.apply_config(self.config)
 
-        if hasattr(self, "anim_source"):
+        if hasattr(self, 'anim_source'):
             self.anim_change_time = self.anim_rate
             self.anim_index = 0
             self.image = self.anim_source[0]
 
-        if hasattr(self, "image"):
+        if hasattr(self, 'image'):
             self.rect = self.image.get_rect()
             self.rect.x = x
             self.rect.y = y
@@ -28,7 +28,7 @@ class Configurable(Sprite):
             self.rect = Rect(x, y, 32, 32)
 
     def update_animation(self, delta):
-        if hasattr(self, "anim_source"):
+        if hasattr(self, 'anim_source'):
             self.anim_change_time -= delta
 
             if self.anim_change_time < 0:
@@ -38,7 +38,7 @@ class Configurable(Sprite):
                 if self.anim_index == len(self.anim_source):
                     self.anim_index = 0
 
-                    if not hasattr(self, "anim_loop") or not self.anim_loop:
+                    if not hasattr(self, 'anim_loop') or not self.anim_loop:
                         self.kill()
 
                 self.image = self.anim_source[self.anim_index]
@@ -75,8 +75,8 @@ class Configurable(Sprite):
                     entries[img_fmt] = pygame.image.load(config[img_fmt]['value']).convert_alpha()
 
         if 'anim_source' in config:
-            entries['anim_source'] = [pygame.image.load(config['anim_source'] + str(i) + ".png").convert_alpha()
-                                      for i in range(entries["anim_count"])]
+            entries['anim_source'] = [pygame.image.load(config['anim_source'] + str(i) + '.png').convert_alpha()
+                                      for i in range(entries['anim_count'])]
 
         if 'images' in config:
             original = pygame.image.load(config['images']).convert_alpha()
