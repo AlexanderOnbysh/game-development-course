@@ -34,7 +34,7 @@ class Menu(Configurable):
             MenuButton(
                 self,
                 'MenuDefenseButton',
-                self.game.defence_prototypes[i].display_name,
+                self.game.defense_prototypes[i].display_name,
                 (i + 1) * 64, 0,
                 lambda: self.game.select_defense((pygame.mouse.get_pos()[0] - 64) // 64)
             )
