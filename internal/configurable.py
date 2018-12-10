@@ -1,12 +1,11 @@
-from copy import deepcopy
-
-import pygame
-import yaml
-from pygame.rect import Rect
 from pygame.sprite import Sprite
+from pygame.rect import Rect
+import yaml
+import pygame
+from copy import deepcopy as dc
 
 
-class Configurable(Sprite):
+class Config(Sprite):
     Cache = {}
 
     def __init__(self, name, x, y):
@@ -28,17 +27,44 @@ class Configurable(Sprite):
         else:
             self.rect = Rect(x, y, 32, 32)
 
-    @staticmethod
-    def load_config(name):
-        if name in Configurable.Cache.keys():
-            return Configurable.Cache[name]
+    def update_animation(self, delta):
+        if hasattr(self, "anim_source"):
+            self.anim_change_time -= delta
 
-        with open(f'configs/{name}.yaml', 'r') as f:
+            if self.anim_change_time < 0:
+                self.anim_change_time += self.anim_rate
+
+                self.anim_index += 1
+                if self.anim_index == len(self.anim_source):
+                    self.anim_index = 0
+
+                    if not hasattr(self, "anim_loop") or not self.anim_loop:
+                        self.kill()
+
+                self.image = self.anim_source[self.anim_index]
+
+    def load_config(self, name):
+        if name in Config.Cache.keys():
+            return Config.Cache[name]
+
+        path = f'configs/{name}.yaml'
+        if name.startswith('Menu'):
+            path = f'configs/interface/{name}.yaml'
+        elif name.startswith('Attack'):
+            path = f'configs/attack/{name}.yaml'
+        elif name.startswith('Defense'):
+            path = f'configs/defense/{name}.yaml'
+        elif name.startswith('Block'):
+            path = f'configs/map/{name}.yaml'
+        elif name.startswith('Enemy'):
+            path = f'configs/enemy/{name}.yaml'
+
+        with open(path, 'r') as f:
             config = yaml.load(f)
 
-        entries = deepcopy(config)
+        entries = dc(config)
 
-        for img_fmt in ('image', 'image_selected', 'image_highlighted', 'image_d'):
+        for img_fmt in ('image', 'image_s', 'image_h', 'image_d'):
             if img_fmt in config:
                 type = config[img_fmt]['type']
                 if type == 'img':
@@ -57,7 +83,7 @@ class Configurable(Sprite):
         if 'font' in config:
             entries['font'] = pygame.font.Font(pygame.font.match_font(config['font'], 'font_bold' in entries.keys()), entries['font_size'])
 
-        Configurable.Cache[name] = entries
+        Config.Cache[name] = entries
         return entries
 
     def apply_config(self, config):
