@@ -31,16 +31,9 @@ class Menu(Configurable):
         self.clear()
 
         self.defense_buttons = [
-            MenuButton(
-                self,
-                'MenuDefenseButton',
-                self.game.defense_prototypes[i].display_name,
-                (i + 1) * 64, 0,
-                lambda: self.game.select_defense((pygame.mouse.get_pos()[0] - 64) // 64)
-            )
-            for i in range(len(self.game.defense_prototypes))
-        ]
-
+            MenuButton(self, 'MenuDefenseButton', self.game.defense_prototypes[i].display_name, (i + 1) * 64, 0,
+                       lambda: self.game.choose_defense((pygame.mouse.get_pos()[0] - 64) // 64)) for i in
+            range(len(self.game.defense_prototypes))]
         self.components.add(self.defense_buttons)
         self.components.add(self.wave_label)
         self.components.add(self.lives_label)
@@ -53,6 +46,14 @@ class Menu(Configurable):
     def clear(self):
         self.components.remove(self.components)
         self.component_next = self.top
+
+    def update(self):
+        if not self.visible:
+            for i in range(len(self.defense_buttons)):
+                self.defense_buttons[i].disabled = (self.game.defense_prototypes[i].cost > self.game.level.money)
+                self.defense_buttons[i].selected = (self.game.defense_type == i)
+
+        self.components.update()
 
     def clicked(self):
         for component in self.components:
@@ -94,7 +95,7 @@ class Menu(Configurable):
 
 
 class MenuLabel(Configurable):
-    def __init__(self, _, type, text, x, y):
+    def __init__(self, menu, type, text, x, y):
         super().__init__(type, x, y)
 
         self.text = text
