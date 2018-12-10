@@ -1,27 +1,36 @@
 import pygame
-
-from .interface.interface import Interface
+from internal.menu import Menu
 
 
 class Game:
     def __init__(self, window):
-        self.running = True
+        self.menu = ...
+
+        self.running = None
         self.window = window
         self.clock = pygame.time.Clock()
-        self.interface = Interface(self)
+        self.defenses = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
+        self.explosions = pygame.sprite.Group()
+        self.load_level()
+
+    def load_level(self):
+        self.menu = Menu(self)
 
     def run(self):
-        while self.running:
-            self.clock.tick(60)
+        self.running = True
 
-            # handle events
+        while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    self.menu.clicked()
 
-            # redraw screen
+            self.menu.update()
+
             self.window.clear()
-            self.interface.draw(self.window.screen)
+            self.menu.draw(self.window.screen)
 
     def quit(self):
         self.running = False
