@@ -11,7 +11,7 @@ class Menu(Configurable):
         self.wave_label = ...
         self.lives_label = ...
         self.money_label = ...
-        self.sinternal_label = ...
+        self.sint_lable = ...
         self.defense_buttons = ...
 
         self.component_next = ...
@@ -32,27 +32,39 @@ class Menu(Configurable):
 
         self.defense_buttons = [
             MenuButton(
-                self,
-                'MenuDefenseButton',
-                self.game.defence_prototypes[i].display_name,
+                self, 'MenuDefenseButton',
+                self.game.defense_prototypes[i].display_name,
                 (i + 1) * 64, 0,
-                lambda: self.game.select_defense((pygame.mouse.get_pos()[0] - 64) // 64)
+                lambda: self.game.choose_defense((pygame.mouse.get_pos()[0] - 64) // 64)
             )
             for i in range(len(self.game.defense_prototypes))
         ]
+
+        self.wave_label = MenuLabel(self, "MenuPauseButton", "Wave", 448, 0)
+        self.lives_label = MenuLabel(self, "MenuPauseButton", "Lives", 576, 0)
+        self.money_label = MenuLabel(self, "MenuPauseButton", "Money", 704, 0)
+        self.sint_lable = MenuLabel(self, "MenuPauseButton", "Sint", 832, 0)
 
         self.components.add(self.defense_buttons)
         self.components.add(self.wave_label)
         self.components.add(self.lives_label)
         self.components.add(self.money_label)
-        self.components.add(self.sinternal_label)
-        self.components.add(MenuButton(self, 'MenuPauseButton', 'Menu', 1088, 0, self.show))
+        self.components.add(self.sint_lable)
+        self.components.add(MenuButton(self, "MenuPauseButton", "Menu", 1088, 0, self.show))
 
         self.update()
 
     def clear(self):
         self.components.remove(self.components)
         self.component_next = self.top
+
+    def update(self):
+        if not self.visible:
+            for i in range(len(self.defense_buttons)):
+                self.defense_buttons[i].disabled = (self.game.defense_prototypes[i].cost > self.game.level.money)
+                self.defense_buttons[i].selected = (self.game.defense_type == i)
+
+        self.components.update()
 
     def clicked(self):
         for component in self.components:
@@ -94,7 +106,7 @@ class Menu(Configurable):
 
 
 class MenuLabel(Configurable):
-    def __init__(self, _, type, text, x, y):
+    def __init__(self, menu, type, text, x, y):
         super().__init__(type, x, y)
 
         self.text = text
@@ -129,7 +141,7 @@ class MenuLabel(Configurable):
 
         self.image_template = image
 
-        if hasattr(self, 'font'):
+        if hasattr(self, "font"):
             self.image = image.copy()
             self.render_text(self.image)
         else:
