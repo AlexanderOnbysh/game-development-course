@@ -1,6 +1,6 @@
 import pygame
 
-from .interface import Interface
+from .interface.interface import Interface
 
 
 class Game:

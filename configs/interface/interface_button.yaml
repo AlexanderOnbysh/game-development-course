@@ -3,7 +3,7 @@ image_selected:
   value: textures/InterfaceButton.png
 image_highlighted:
   type: aimg
-  value: textures/MenuButtonH.png
+  value: textures/InterfaceButtonH.png
 
 font_size: 22
 font_bold: true
