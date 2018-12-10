@@ -1,5 +1,7 @@
 import pygame
+from internal.level import Level
 from internal.defense import Defense
+from internal.wave import Wave
 from internal.menu import Menu
 
 
@@ -30,7 +32,7 @@ class Game:
                     self.quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if not self.menu.visible:
-                        self.place_defense(pygame.mouse.get_pos())
+                        self.set_defense(pygame.mouse.get_pos())
                     self.menu.clicked()
 
             self.menu.update()
@@ -49,8 +51,16 @@ class Game:
     def quit(self):
         self.running = False
 
-    def select_defense(self, type):
-        raise NotImplemented
+    def choose_defense(self, type):
+        self.defense_type = type
 
-    def place_defense(self, position):
-        raise NotImplemented
+    def set_defense(self, position):
+        if self.defense_type < 0:
+            return
+
+        defense = self.defense_prototypes[self.defense_type]
+
+        x = position[0] - position[0] % 32
+        y = position[1] - position[1] % 32
+
+        self.defenses.add(Defense(self, defense.name, x, y))
