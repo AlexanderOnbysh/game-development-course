@@ -47,7 +47,7 @@ class Config(Sprite):
         if name in Config.Cache.keys():
             return Config.Cache[name]
 
-        path = f'configs/{name}.yaml'
+        path = None
         if name.startswith('Menu'):
             path = f'configs/interface/{name}.yaml'
         elif name.startswith('Attack'):
@@ -58,6 +58,8 @@ class Config(Sprite):
             path = f'configs/map/{name}.yaml'
         elif name.startswith('Enemy'):
             path = f'configs/enemy/{name}.yaml'
+        elif path is None:
+            raise ValueError('no such config')
 
         with open(path, 'r') as f:
             config = yaml.load(f)
@@ -81,7 +83,9 @@ class Config(Sprite):
             entries['images'] = [original] + [pygame.transform.rotate(original, angle) for angle in range(5, 361, 5)]
 
         if 'font' in config:
-            entries['font'] = pygame.font.Font(pygame.font.match_font(config['font'], 'font_bold' in entries.keys()), entries['font_size'])
+            entries['font'] = pygame.font.Font(
+                pygame.font.match_font(config['font'], 'font_bold' in entries.keys()),
+                entries['font_size'])
 
         Config.Cache[name] = entries
         return entries
