@@ -1,24 +1,26 @@
 import pygame
 from internal.level import Level
 from internal.defense import Defense
-from internal.wave import Wave
 from internal.menu import Menu
 
 
 class Game:
-    def __init__(self, window):
+    def __init__(self,  window):
         self.running = None
+        self.level = ...
+        self.menu = ...
 
         self.window = window
         self.clock = pygame.time.Clock()
         self.defenses = pygame.sprite.Group()
-        self.load_level()
+        self.load_level('path')
         self.defense_type = 0
         self.defense_prototypes = [Defense(self, 'Defense' + name, -100, -100)
                                    for name in ['Pillbox', 'Wall']]
 
-    def load_level(self):
+    def load_level(self, name):
         self.defenses.empty()
+        self.level = Level(self, name)
         self.menu = Menu(self)
 
     def run(self):
@@ -38,13 +40,11 @@ class Game:
             self.menu.update()
 
             if not self.menu.visible:
+                self.level.time += delta
                 self.defenses.update(delta)
 
-                self.wave.update(delta)
-                if self.wave.done:
-                    self.wave = Wave(self, self.wave.number + 1)
-
             self.window.clear()
+            self.level.configures.draw(self.window.screen)
             self.defenses.draw(self.window.screen)
             self.menu.draw(self.window.screen)
 
@@ -60,7 +60,10 @@ class Game:
 
         defense = self.defense_prototypes[self.defense_type]
 
-        x = position[0] - position[0] % 32
-        y = position[1] - position[1] % 32
-
-        self.defenses.add(Defense(self, defense.name, x, y))
+        self.defenses.add(Defense(
+                self,
+                defense.name,
+                position[0] - position[0] % 32,
+                position[1] - position[1] % 32,
+            ),
+        )
