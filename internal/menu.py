@@ -11,7 +11,7 @@ class Menu(Configurable):
         self.wave_label = ...
         self.lives_label = ...
         self.money_label = ...
-        self.sinternal_label = ...
+        self.sint_lable = ...
         self.defense_buttons = ...
 
         self.component_next = ...
@@ -31,15 +31,26 @@ class Menu(Configurable):
         self.clear()
 
         self.defense_buttons = [
-            MenuButton(self, 'MenuDefenseButton', self.game.defense_prototypes[i].display_name, (i + 1) * 64, 0,
-                       lambda: self.game.choose_defense((pygame.mouse.get_pos()[0] - 64) // 64)) for i in
-            range(len(self.game.defense_prototypes))]
+            MenuButton(
+                self, 'MenuDefenseButton',
+                self.game.defense_prototypes[i].display_name,
+                (i + 1) * 64, 0,
+                lambda: self.game.choose_defense((pygame.mouse.get_pos()[0] - 64) // 64)
+            )
+            for i in range(len(self.game.defense_prototypes))
+        ]
+
+        self.wave_label = MenuLabel(self, "MenuPauseButton", "Wave", 448, 0)
+        self.lives_label = MenuLabel(self, "MenuPauseButton", "Lives", 576, 0)
+        self.money_label = MenuLabel(self, "MenuPauseButton", "Money", 704, 0)
+        self.sint_lable = MenuLabel(self, "MenuPauseButton", "Sint", 832, 0)
+
         self.components.add(self.defense_buttons)
         self.components.add(self.wave_label)
         self.components.add(self.lives_label)
         self.components.add(self.money_label)
-        self.components.add(self.sinternal_label)
-        self.components.add(MenuButton(self, 'MenuPauseButton', 'Menu', 1088, 0, self.show))
+        self.components.add(self.sint_lable)
+        self.components.add(MenuButton(self, "MenuPauseButton", "Menu", 1088, 0, self.show))
 
         self.update()
 
@@ -130,7 +141,7 @@ class MenuLabel(Configurable):
 
         self.image_template = image
 
-        if hasattr(self, 'font'):
+        if hasattr(self, "font"):
             self.image = image.copy()
             self.render_text(self.image)
         else:
