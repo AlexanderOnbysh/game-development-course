@@ -5,7 +5,7 @@ import pygame
 from copy import deepcopy as dc
 
 
-class Config(Sprite):
+class Configurable(Sprite):
     Cache = {}
 
     def __init__(self, name, x, y):
@@ -44,8 +44,8 @@ class Config(Sprite):
                 self.image = self.anim_source[self.anim_index]
 
     def load_config(self, name):
-        if name in Config.Cache.keys():
-            return Config.Cache[name]
+        if name in Configurable.Cache.keys():
+            return Configurable.Cache[name]
 
         path = None
         if name.startswith('Menu'):
@@ -87,7 +87,7 @@ class Config(Sprite):
                 pygame.font.match_font(config['font'], 'font_bold' in entries.keys()),
                 entries['font_size'])
 
-        Config.Cache[name] = entries
+        Configurable.Cache[name] = entries
         return entries
 
     def apply_config(self, config):
