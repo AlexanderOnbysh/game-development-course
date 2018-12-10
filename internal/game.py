@@ -5,7 +5,7 @@ from internal.menu import Menu
 
 
 class Game:
-    def __init__(self,  window):
+    def __init__(self, window):
         self.running = None
         self.level = ...
         self.menu = ...
@@ -16,7 +16,7 @@ class Game:
         self.load_level('path')
         self.defense_type = 0
         self.defense_prototypes = [Defense(self, 'Defense' + name, -100, -100)
-                                   for name in ['Pillbox', 'Wall']]
+                                   for name in ['Pillbox', 'Wall', 'Mines', 'Artillery']]
 
     def load_level(self, name):
         self.defenses.empty()
@@ -38,6 +38,7 @@ class Game:
                     self.menu.clicked()
 
             self.menu.update()
+            self.level.pathfinding.update()
 
             if not self.menu.visible:
                 self.level.time += delta
@@ -67,3 +68,4 @@ class Game:
                 position[1] - position[1] % 32,
             ),
         )
+        self.level.money -= defense.cost
