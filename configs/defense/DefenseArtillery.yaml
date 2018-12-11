@@ -1,0 +1,11 @@
+display_name: Artillery
+block: true
+cost: 450
+rotate: true
+flash_offset: 32
+attack: explosion
+attack_rate: 2
+attack_range: 600
+explosion_radius: 70
+explosion_damage: 150
+images: default.png # TODO: change png file

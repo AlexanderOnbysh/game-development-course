@@ -1,0 +1,8 @@
+display_name: Wall
+block: true
+cost: 25
+rotate: false
+attack: none
+image:
+  type: aimg
+  value: default.png # TODO: change png file

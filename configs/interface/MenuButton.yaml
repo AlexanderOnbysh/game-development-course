@@ -1,0 +1,16 @@
+font_size: 22
+font_bold: true
+font: arial
+
+color_red: 240
+color_green: 240
+color_blue: 240
+
+padding: 15
+
+image_s:
+  type: aimg
+  value: textures/interface/MenuButton.png
+image_h:
+  type: aimg
+  value: textures/interface/MenuButtonH.png
