@@ -63,7 +63,7 @@ class Menu(Configurable):
             self.lives_label.set_text("Lives: " + str(self.game.level.lives))
             self.lives_label.highlighted = (self.game.level.lives < 5)
             self.money_label.set_text("Money: " + str(self.game.level.money))
-            self.sint_lable.set_text("Sinternal: " + str(self.game.level.get_sinternal()))
+            self.sint_lable.set_text("Sinternal: " + str(self.game.level.get_sint()))
 
             for i in range(len(self.defense_buttons)):
                 self.defense_buttons[i].disabled = (self.game.defense_prototypes[i].cost > self.game.level.money)
