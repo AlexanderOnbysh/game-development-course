@@ -16,7 +16,7 @@ class RouteSearching:
         cells = self.collision.height
         x = self.game.window.resolution[0]
         attempts = 100
-        
+
         while attempts > 0:
             attempts -= 1
 
@@ -34,7 +34,7 @@ class RouteSearching:
                 total += 1
 
         return total
-    
+
     def update(self):
         for path in self.pool:
             if not path.done:
@@ -46,8 +46,8 @@ class RouteSearching:
         while attempts > 0:
             attempts -= 1
 
-            path = self.pool[random.randint(self.partials, len(self.pool) - 1)] 
-            
+            path = self.pool[random.randint(self.partials, len(self.pool) - 1)]
+
             if path.done and path.start[0] >= self.game.window.resolution[0]:
                 return path
 
@@ -71,10 +71,10 @@ class RouteSearching:
                 if path.done and neighbour in path.points:
                     return path, neighbour
 
-        path = Route(self, point)
-        self.pool.insert(0, path)
+        route = Route(self, point)
+        self.pool.insert(0, route)
         self.partials += 1
-        return path, point
+        return route, point
 
     def is_critical(self, point):
         for path in self.pool:
@@ -156,7 +156,7 @@ class Route:
         return lowest_point, lowest_score
 
     def get_neighbours(self, position):
-        if position[0] >=  self.pathfinding.game.window.resolution[0]:
+        if position[0] >= self.pathfinding.game.window.resolution[0]:
             return [(position[0] - self.res, position[1])]
 
         x_diff = range(position[0] - self.res, position[0] + self.res + 1, self.res)
@@ -174,7 +174,7 @@ class Route:
         return base + crowding
 
     def trace_path(self, current, came_from):
-        path = [ current ]
+        path = [current]
         while current in came_from:
             current = came_from[current]
             path.insert(0, current)

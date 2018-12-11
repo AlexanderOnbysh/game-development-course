@@ -34,7 +34,7 @@ class Level:
         for args in self.data:
             self.configures.add(Configurable(args[0], int(args[1]), int(args[2])))
 
-        self.route_find.precompute(30)
+        self.route_find.setup(30)
         self.lives = 20
         self.money = 600
         self.time = 0
