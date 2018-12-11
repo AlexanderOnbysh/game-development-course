@@ -38,7 +38,7 @@ class Game:
                     self.menu.clicked()
 
             self.menu.update()
-            self.level.pathfinding.update()
+            self.level.route_find.update()
 
             if not self.menu.visible:
                 self.level.time += delta
