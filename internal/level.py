@@ -19,15 +19,12 @@ class Level:
         self.start()
 
     def load_data(self):
-        try:
-            with open(f'levels/{self.name}.level', 'r') as file:
-                self.data = [line.strip().split(" ")
-                             for line in file.readlines()
-                             if len(line.strip()) > 0 and line[0] != '#']
-        except IOError:
-            raise IOError
+        with open(f'levels/{self.name}.level', 'r') as file:
+            self.data = [line.strip().split(" ") for line in file.readlines()
+                         if len(line.strip()) > 0 and line[0] != '#']
 
     def start(self):
+        # TODO: initialize collision
         self.configures = OrderedUpdates()
         self.route_find = RouteSearching(self.game, self.collision)
 
@@ -40,4 +37,5 @@ class Level:
         self.time = 0
 
     def get_sint(self):
-        return int((self.time / 5) ** 1.4 + (self.game.wave.number - 1) ** 3)
+        # TODO: implement
+        return 0
