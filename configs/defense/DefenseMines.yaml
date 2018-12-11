@@ -1,0 +1,11 @@
+display_name: Mines
+cost: 25
+rotate: false
+attack: explosion
+attack_rate: -1
+attack_range: 25
+explosion_radius: 40
+explosion_damage: 120
+image:
+  type: aimg
+  value: default.png # TODO: change png file
