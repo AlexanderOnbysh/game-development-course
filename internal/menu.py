@@ -60,6 +60,11 @@ class Menu(Configurable):
 
     def update(self):
         if not self.visible:
+            self.lives_label.set_text("Lives: " + str(self.game.level.lives))
+            self.lives_label.highlighted = (self.game.level.lives < 5)
+            self.money_label.set_text("Money: " + str(self.game.level.money))
+            self.sint_lable.set_text("Sinternal: " + str(self.game.level.get_sint()))
+
             for i in range(len(self.defense_buttons)):
                 self.defense_buttons[i].disabled = (self.game.defense_prototypes[i].cost > self.game.level.money)
                 self.defense_buttons[i].selected = (self.game.defense_type == i)
@@ -94,14 +99,14 @@ class Menu(Configurable):
             self.add_button('Continue', self.hide)
             self.add_button('Restart Game', lambda: self.game.load_level(self.game.level.name))
         else:
-            self.add_button('Start Game', self.hide)
-
+            self.add_button("Start Game", self.hide)
         self.add_button('Quit Game', self.game.quit)
 
     def show_lose_screen(self):
         self.show()
         self.clear()
         self.add_button('Game Over', None)
+        self.add_button(f'{self.game.level.get_sinternal()} Points', None)
         self.add_button('Restart Game', lambda: self.game.load_level(self.game.level.name))
 
 
