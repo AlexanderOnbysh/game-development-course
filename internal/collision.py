@@ -9,10 +9,9 @@ class Collision:
         self.overlay = None
 
     def point_to_index(self, x, y):
-        xIndex = x // self.tile_size
-        yIndex = y // self.tile_size
-
-        return (yIndex * 1000) + xIndex
+        x_index = x // self.tile_size
+        y_index = y // self.tile_size
+        return (y_index * 1000) + x_index
 
     def point_blocked(self, x, y):
         return self.point_to_index(x, y) in self.blocked_tiles
@@ -27,36 +26,29 @@ class Collision:
 
     def unblock_point(self, x, y):
         index = self.point_to_index(x, y)
-
         if index in self.blocked_tiles:
             self.blocked_tiles.remove(index)
             self.overlay = None
 
     def rect_blocked(self, x, y, width, height):
-        xOffset = x % self.tile_size
-        yOffset = y % self.tile_size
-
-        for xPos in range(x - xOffset, x + width, self.tile_size):
-            for yPos in range(y - yOffset, y + height, self.tile_size):
-                
-                if self.point_blocked(xPos, yPos):
+        x_offset = x % self.tile_size
+        y_offset = y % self.tile_size
+        for x_position in range(x - x_offset, x + width, self.tile_size):
+            for y_position in range(y - y_offset, y + height, self.tile_size):
+                if self.point_blocked(x_position, y_position):
                     return True
-
         return False
 
     def block_rect(self, x, y, width, height):
-        xOffset = x % self.tile_size
-        yOffset = y % self.tile_size
-
-        for xPos in range(x - xOffset, x + width - 2, self.tile_size):
-            for yPos in range(y - yOffset, y + height - 2, self.tile_size):
-                self.block_point(xPos, yPos)
+        x_offset = x % self.tile_size
+        y_offset = y % self.tile_size
+        for x_position in range(x - x_offset, x + width - 2, self.tile_size):
+            for y_position in range(y - y_offset, y + height - 2, self.tile_size):
+                self.block_point(x_position, y_position)
 
     def unblock_rect(self, x, y, width, height):
-        xOffset = x % self.tile_size
-        yOffset = y % self.tile_size
-
-        for xPos in range(x - xOffset, x + width, self.tile_size):
-            for yPos in range(y - yOffset, y + height, self.tile_size):
-                
-                self.unblock_point(xPos, yPos)
+        x_offset = x % self.tile_size
+        y_offset = y % self.tile_size
+        for x_position in range(x - x_offset, x + width, self.tile_size):
+            for y_position in range(y - y_offset, y + height, self.tile_size):
+                self.unblock_point(x_position, y_position)
