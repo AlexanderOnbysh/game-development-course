@@ -1,13 +1,13 @@
 from internal.configurable import Configurable
 from internal.route_searching import RouteSearching
 from pygame.sprite import OrderedUpdates
+from internal.collision import Collision
 
 
 class Level:
     def __init__(self, game, name):
         self.route_find = ...
         self.configures = ...
-        self.collision = ...
         self.data = ...
         self.lives = ...
         self.money = ...
@@ -24,7 +24,7 @@ class Level:
                          if len(line.strip()) > 0 and line[0] != '#']
 
     def start(self):
-        # TODO: initialize collision
+        self.collision = Collision(self, self.game.window.resolution, 32)
         self.configures = OrderedUpdates()
         self.route_find = RouteSearching(self.game, self.collision)
 
