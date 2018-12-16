@@ -13,9 +13,9 @@ class Bullet(Configurable):
         dy = target[1] - origin[1]
 
         magnitude = math.sqrt(dx ** 2 + dy ** 2)
-        self.xSpeed = (dx / magnitude) * self.speed * random.randint(200, 500)
-        self.ySpeed = (dy / magnitude) * self.speed * random.randint(200, 500)
-        self.life = magnitude / math.sqrt(self.xSpeed ** 2 + self.ySpeed ** 2)
+        self.x_speed = (dx / magnitude) * self.speed * random.randint(200, 500)
+        self.y_speed = (dy / magnitude) * self.speed * random.randint(200, 500)
+        self.life = magnitude / math.sqrt(self.x_speed ** 2 + self.y_speed ** 2)
         self.current_life = 0
 
         angle = math.degrees(math.atan2(-dy, dx))
@@ -24,8 +24,8 @@ class Bullet(Configurable):
         self.rect.center = origin
 
     def update(self, delta):
-        self.rect.x += self.xSpeed * delta
-        self.rect.y += self.ySpeed * delta
+        self.rect.x += self.x_speed * delta
+        self.rect.y += self.y_speed * delta
 
         self.current_life += delta
         if self.life < self.current_life:
@@ -37,9 +37,9 @@ class Bullet(Configurable):
         for enemy in self.game.wave.enemies:
             dx = enemy.rect.centerx - self.rect.centerx
             dy = enemy.rect.centery - self.rect.centery
-            sqrMagnitude = (dx ** 2) + (dy ** 2)
+            sqr_magnitude = (dx ** 2) + (dy ** 2)
 
-            if sqrMagnitude < (enemy.rect.width / 2) ** 2:
+            if sqr_magnitude < (enemy.rect.width / 2) ** 2:
                 enemy.take_damage(self.damage)
                 self.kill()
                 return
