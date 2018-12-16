@@ -22,3 +22,24 @@ class Bullet(Configurable):
         self.image = pygame.transform.rotate(self.image, angle)
         self.rect = self.image.get_rect()
         self.rect.center = origin
+
+    def update(self, delta):
+        self.rect.x += self.xSpeed * delta
+        self.rect.y += self.ySpeed * delta
+
+        self.current_life += delta
+        if self.life < self.current_life:
+            self.kill()
+
+        if self.current_life > 0.03 and self.game.level.collision.point_blocked(self.rect.centerx, self.rect.centery):
+            self.kill()
+
+        for enemy in self.game.wave.enemies:
+            dx = enemy.rect.centerx - self.rect.centerx
+            dy = enemy.rect.centery - self.rect.centery
+            sqrMagnitude = (dx ** 2) + (dy ** 2)
+
+            if sqrMagnitude < (enemy.rect.width / 2) ** 2:
+                enemy.take_damage(self.damage)
+                self.kill()
+                return
