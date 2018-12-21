@@ -55,7 +55,7 @@ class Configurable(Sprite):
             path = f'configs/attack/{name}.yaml'
         elif name.startswith('Defense'):
             path = f'configs/defense/{name}.yaml'
-        elif name.startswith('Block'):
+        elif name.startswith('Map'):
             path = f'configs/map/{name}.yaml'
         elif name.startswith('Enemy'):
             path = f'configs/enemy/{name}.yaml'

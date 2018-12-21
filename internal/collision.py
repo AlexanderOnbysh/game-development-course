@@ -22,7 +22,7 @@ class Collision:
         if index not in self.blocked_tiles:
             self.blocked_tiles.append(index)
             self.overlay = None
-            self.level.pathfinding.repair((x - (x % self.tile_size), y - (y % self.tile_size)))
+            self.level.route_find.repair((x - (x % self.tile_size), y - (y % self.tile_size)))
 
     def unblock_point(self, x, y):
         index = self.point_to_index(x, y)
