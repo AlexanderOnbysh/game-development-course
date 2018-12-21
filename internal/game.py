@@ -48,10 +48,18 @@ class Game:
             if not self.menu.visible:
                 self.level.time += delta
                 self.defenses.update(delta)
+                self.bullets.update(delta)
+                self.explosions.update(delta)
+                self.wave.update(delta)
+                if self.wave.done:
+                    self.wave = Wave(self, self.wave.number + 1)
 
             self.window.clear()
             self.level.configures.draw(self.window.screen)
             self.defenses.draw(self.window.screen)
+            self.bullets.draw(self.window.screen)
+            self.wave.enemies.draw(self.window.screen)
+            self.explosions.draw(self.window.screen)
             self.menu.draw(self.window.screen)
 
     def quit(self):
@@ -65,6 +73,18 @@ class Game:
             return
 
         defense = self.defense_prototypes[self.defense_type]
+
+        if self.level.money < defense.cost:
+            return
+
+        x = position[0] - position[0] % 32
+        y = position[1] - position[1] % 32
+
+        if self.level.collision.rect_blocked(x, y, defense.rect.width - 2, defense.rect.height - 2):
+            return
+
+        if hasattr(defense, 'block') and self.level.route_find.is_critical((x, y)):
+            return
 
         self.defenses.add(Defense(
                 self,
