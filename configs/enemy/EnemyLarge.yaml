@@ -1,0 +1,7 @@
+display_name: Large Enemy
+health: 1000
+speed: 45
+money: 200
+image:
+  type: aimg
+  value: images/default.png

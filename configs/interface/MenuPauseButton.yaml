@@ -8,7 +8,7 @@ color_blue: 240
 
 image_s:
   type: aimg
-  value: textures/interface/MenuPauseButton.png
+  value: images/interface/MenuPauseButton.png
 image_h:
   type: aimg
-  value: textures/interface/MenuPauseButtonH.png
+  value: images/interface/MenuPauseButtonH.png

@@ -1,0 +1,7 @@
+display_name: Medium Enemy
+health: 250
+speed: 75
+money: 35
+image:
+  type: aimg
+  value: images/default.png

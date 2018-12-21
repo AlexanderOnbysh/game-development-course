@@ -10,7 +10,7 @@ padding: 15
 
 image_s:
   type: aimg
-  value: textures/interface/MenuButton.png
+  value: images/interface/MenuButton.png
 image_h:
   type: aimg
-  value: textures/interface/MenuButtonH.png
+  value: images/interface/MenuButtonH.png

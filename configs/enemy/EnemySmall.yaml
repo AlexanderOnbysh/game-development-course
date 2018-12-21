@@ -1,0 +1,7 @@
+display_name: Small Enemy
+health: 40
+speed: 125
+money: 15
+image:
+  type: aimg
+  value: images/default.png

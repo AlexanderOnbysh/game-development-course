@@ -1,13 +1,14 @@
 from internal.configurable import Configurable
+from internal.wave import Wave
 from internal.route_searching import RouteSearching
 from pygame.sprite import OrderedUpdates
+from internal.collision import Collision
 
 
 class Level:
     def __init__(self, game, name):
         self.route_find = ...
         self.configures = ...
-        self.collision = ...
         self.data = ...
         self.lives = ...
         self.money = ...
@@ -24,7 +25,7 @@ class Level:
                          if len(line.strip()) > 0 and line[0] != '#']
 
     def start(self):
-        # TODO: initialize collision
+        self.collision = Collision(self, self.game.window.resolution, 32)
         self.configures = OrderedUpdates()
         self.route_find = RouteSearching(self.game, self.collision)
 
@@ -32,10 +33,10 @@ class Level:
             self.configures.add(Configurable(args[0], int(args[1]), int(args[2])))
 
         self.route_find.setup(30)
+        self.wave = Wave(self.game, 1)
         self.lives = 20
         self.money = 600
         self.time = 0
 
     def get_sint(self):
-        # TODO: implement
-        return 0
+        return int((self.time / 5) ** 1.4 + (self.game.wave.number - 1) ** 3)
