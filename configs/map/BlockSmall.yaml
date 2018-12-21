@@ -1,4 +1,4 @@
 block: true
 image:
   type: img
-  value: default.png # TODO: replace with image
+  value: images/default.png  # TODO: replace with image

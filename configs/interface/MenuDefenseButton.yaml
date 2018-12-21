@@ -8,10 +8,10 @@ color_blue: 240
 
 image_s:
   type: aimg
-  value: textures/interface/MenuDefenseButton.png
+  value: images/interface/MenuDefenseButton.png
 image_h:
   type: aimg
-  value: textures/interface/MenuDefenseButtonD.png
+  value: images/interface/MenuDefenseButtonD.png
 image_d:
   type: aimg
-  value: textures/interface/MenuDefenseButtonH.png
+  value: images/interface/MenuDefenseButtonH.png
