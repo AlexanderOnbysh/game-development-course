@@ -33,7 +33,6 @@ class Game:
 
         while self.running:
             delta = self.clock.tick(60) / 1000.0
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit()

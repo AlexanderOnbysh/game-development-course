@@ -8,4 +8,4 @@ explosion_radius: 40
 explosion_damage: 120
 image:
   type: aimg
-  value: default.png # TODO: change png file
+  value: images/default.png  # TODO: change png file

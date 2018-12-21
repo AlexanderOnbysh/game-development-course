@@ -1,4 +1,5 @@
 import math
+
 from internal.configurable import Configurable
 
 
