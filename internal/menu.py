@@ -1,20 +1,13 @@
-from internal.configurable import Configurable
-from pygame.sprite import OrderedUpdates
 import pygame
+from pygame.sprite import OrderedUpdates
+
+from internal.configurable import Configurable
 
 
 class Menu(Configurable):
 
     def __init__(self, game):
         super().__init__('Menu', 0, 0)
-
-        self.wave_label = ...
-        self.lives_label = ...
-        self.money_label = ...
-        self.sint_lable = ...
-        self.defense_buttons = ...
-
-        self.component_next = ...
 
         self.game = game
         self.components = OrderedUpdates()
