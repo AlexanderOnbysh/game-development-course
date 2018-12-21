@@ -10,7 +10,7 @@ class Enemy(Configurable):
         super().__init__(name, x, y)
 
         self.game = game
-        self.path = game.level.pathfinding.get_path()
+        self.path = game.level.route_find.get_path()
         self.target = self.path.start
         self.rect.topleft = self.target
         self.x = self.target[0]

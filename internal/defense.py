@@ -7,8 +7,6 @@ class Defense(Configurable):
     def __init__(self, game, name, x, y):
         super().__init__(name, x, y)
 
-        self.attack_range = ...
-
         self.game = game
         self.fire_time = 0
         self.target = None
@@ -83,7 +81,7 @@ class DefenseLight(Configurable):
         dx *= (offset / magnitude)
         dy *= (offset / magnitude)
 
-        super().__init__('DefenseFlash', defense_position[0] + dx - 16, defense_position[1] + dy - 16)
+        super().__init__('DefenseLight', defense_position[0] + dx - 16, defense_position[1] + dy - 16)
 
     def update(self, delta):
         super().update_animation(delta)
