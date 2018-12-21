@@ -6,4 +6,4 @@ flash_offset: 16
 attack: bullet
 attack_rate: 0.1
 attack_range: 200
-images: images/default.png  # TODO: change png file
+images: images/defense/DefensePillbox.png

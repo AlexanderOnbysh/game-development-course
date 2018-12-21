@@ -8,4 +8,4 @@ attack_rate: 2
 attack_range: 600
 explosion_radius: 70
 explosion_damage: 150
-images: images/default.png  # TODO: change png file
+images: images/defense/DefenseArtillery.png
