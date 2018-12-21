@@ -1,4 +1,5 @@
 import pygame
+
 from internal.enemy import Enemy
 
 

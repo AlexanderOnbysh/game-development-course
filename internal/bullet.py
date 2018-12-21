@@ -1,6 +1,8 @@
-import math
 import random
+
+import math
 import pygame
+
 from internal.configurable import Configurable
 
 

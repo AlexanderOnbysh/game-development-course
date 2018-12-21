@@ -1,6 +1,8 @@
-from internal.configurable import Configurable
-import math
 import random
+
+import math
+
+from internal.configurable import Configurable
 
 
 class Enemy(Configurable):

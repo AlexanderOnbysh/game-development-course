@@ -1,4 +1,5 @@
 from internal.configurable import Configurable
+from internal.wave import Wave
 from internal.route_searching import RouteSearching
 from pygame.sprite import OrderedUpdates
 from internal.collision import Collision
@@ -32,10 +33,10 @@ class Level:
             self.configures.add(Configurable(args[0], int(args[1]), int(args[2])))
 
         self.route_find.setup(30)
+        self.wave = Wave(self.game, 1)
         self.lives = 20
         self.money = 600
         self.time = 0
 
     def get_sint(self):
-        # TODO: implement
-        return 0
+        return int((self.time / 5) ** 1.4 + (self.game.wave.number - 1) ** 3)

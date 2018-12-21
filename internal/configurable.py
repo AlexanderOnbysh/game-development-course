@@ -1,8 +1,9 @@
-from pygame.sprite import Sprite
-from pygame.rect import Rect
-import yaml
+from copy import deepcopy
+
 import pygame
-from copy import deepcopy as dc
+import yaml
+from pygame.rect import Rect
+from pygame.sprite import Sprite
 
 
 class Configurable(Sprite):
@@ -64,7 +65,7 @@ class Configurable(Sprite):
         with open(path, 'r') as f:
             config = yaml.load(f)
 
-        entries = dc(config)
+        entries = deepcopy(config)
 
         for img_fmt in ('image', 'image_s', 'image_h', 'image_d'):
             if img_fmt in config:
