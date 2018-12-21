@@ -1,0 +1,4 @@
+block: true
+image:
+  type: aimg
+  value: images/map/MapMedium.png
