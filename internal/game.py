@@ -1,18 +1,20 @@
 import pygame
-from internal.level import Level
+
 from internal.defense import Defense
+from internal.level import Level
 from internal.menu import Menu
+from internal.wave import Wave
 
 
 class Game:
     def __init__(self, window):
         self.running = None
-        self.level = ...
-        self.menu = ...
 
         self.window = window
         self.clock = pygame.time.Clock()
         self.defenses = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
+        self.explosions = pygame.sprite.Group()
         self.load_level('path')
         self.defense_type = 0
         self.defense_prototypes = [Defense(self, 'Defense' + name, -100, -100)
@@ -20,7 +22,10 @@ class Game:
 
     def load_level(self, name):
         self.defenses.empty()
+        self.bullets.empty()
+        self.explosions.empty()
         self.level = Level(self, name)
+        self.wave = Wave(self, 1)
         self.menu = Menu(self)
 
     def run(self):
