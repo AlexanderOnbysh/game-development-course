@@ -24,26 +24,26 @@ class Menu(Configurable):
         self.clear()
 
         self.defense_buttons = [
-            MenuButton(
+             MenuButton(
                 self, 'MenuDefenseButton',
                 self.game.defense_prototypes[i].display_name,
-                (i + 1) * 64, 0,
+                (i + 1) * 64, 768 - 65,
                 lambda: self.game.choose_defense((pygame.mouse.get_pos()[0] - 64) // 64)
             )
             for i in range(len(self.game.defense_prototypes))
         ]
 
-        self.wave_label = MenuLabel(self, "MenuPauseButton", "Wave", 448, 0)
-        self.lives_label = MenuLabel(self, "MenuPauseButton", "Lives", 576, 0)
-        self.money_label = MenuLabel(self, "MenuPauseButton", "Money", 704, 0)
-        self.sint_lable = MenuLabel(self, "MenuPauseButton", "Sint", 832, 0)
+        self.wave_label = MenuLabel(self, "MenuPauseButton", "Wave", 448, 768 - 65)
+        self.lives_label = MenuLabel(self, "MenuPauseButton", "Lives", 576, 768 - 65)
+        self.money_label = MenuLabel(self, "MenuPauseButton", "Money", 704, 768 - 65)
+        self.sint_lable = MenuLabel(self, "MenuPauseButton", "Sint", 832, 768 - 65)
 
         self.components.add(self.defense_buttons)
         self.components.add(self.wave_label)
         self.components.add(self.lives_label)
         self.components.add(self.money_label)
         self.components.add(self.sint_lable)
-        self.components.add(MenuButton(self, "MenuPauseButton", "Menu", 1088, 0, self.show))
+        self.components.add(MenuButton(self, "MenuPauseButton", "Menu", 1088, 768 - 65, self.show))
 
         self.update()
 
