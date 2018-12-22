@@ -1,8 +1,8 @@
-display_name: Wall
+display_name: Barrier
 block: true
 cost: 25
 rotate: false
 attack: none
 image:
   type: aimg
-  value: images/defense/DefenseWall.png
+  value: images/defense/DefenseBarrier.png

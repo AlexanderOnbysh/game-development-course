@@ -33,16 +33,14 @@ class Menu(Configurable):
             for i in range(len(self.game.defense_prototypes))
         ]
 
-        self.wave_label = MenuLabel(self, "MenuPauseButton", "Wave", 448, 768 - 65)
+        self.wave_label = MenuLabel(self, "MenuPauseButton", "EnemyWave", 448, 768 - 65)
         self.lives_label = MenuLabel(self, "MenuPauseButton", "Lives", 576, 768 - 65)
         self.money_label = MenuLabel(self, "MenuPauseButton", "Money", 704, 768 - 65)
-        self.sint_lable = MenuLabel(self, "MenuPauseButton", "Sint", 832, 768 - 65)
 
         self.components.add(self.defense_buttons)
         self.components.add(self.wave_label)
         self.components.add(self.lives_label)
         self.components.add(self.money_label)
-        self.components.add(self.sint_lable)
         self.components.add(MenuButton(self, "MenuPauseButton", "Menu", 1088, 768 - 65, self.show))
 
         self.update()
@@ -53,10 +51,10 @@ class Menu(Configurable):
 
     def update(self):
         if not self.visible:
+            self.wave_label.set_text(f"EnemyWave: {self.game.level.wave.number}")
             self.lives_label.set_text("Lives: " + str(self.game.level.lives))
             self.lives_label.highlighted = (self.game.level.lives < 5)
             self.money_label.set_text("Money: " + str(self.game.level.money))
-            self.sint_lable.set_text("Sinternal: " + str(self.game.level.get_sint()))
 
             for i in range(len(self.defense_buttons)):
                 self.defense_buttons[i].disabled = (self.game.defense_prototypes[i].cost > self.game.level.money)
@@ -99,7 +97,6 @@ class Menu(Configurable):
         self.show()
         self.clear()
         self.add_button('Game Over', None)
-        self.add_button(f'{self.game.level.get_sinternal()} Points', None)
         self.add_button('Restart Game', lambda: self.game.load_level(self.game.level.name))
 
 

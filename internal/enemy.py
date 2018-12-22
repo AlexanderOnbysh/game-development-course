@@ -35,7 +35,7 @@ class Enemy(Configurable):
         if distance < max:
             self.x = target[0]
             self.y = target[1]
-            self.reached_target()
+            self.is_complete()
         else:
             proportion = max / distance
             self.x += dx * proportion
@@ -44,32 +44,28 @@ class Enemy(Configurable):
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def reached_target(self):
+    def is_complete(self):
         if not self.path.done:
-
-            if self.target[0] < self.game.window.resolution[0] and self.path.points is not None and self.target in self.path.points:
-                self.path, self.target = self.game.level.pathfinding.get_partial_path(self.target)
-
+            if self.target[0] < self.game.window.resolution[0] and \
+                    self.path.points is not None and \
+                    self.target in self.path.points:
+                self.path, self.target = self.game.level.route_find.get_partial_path(self.target)
             return
 
         self.target = self.path.next(self.target)
         if not self.target:
             self.game.level.lives -= 1
-            if (self.game.level.lives == 0):
+            if self.game.level.lives == 0:
                 self.game.menu.show_lose_screen()
-
             self.kill()
 
-    def take_damage(self, damage):
+    def make_damage(self, damage):
         self.health -= damage
-
         if self.health <= 0:
             self.kill()
 
     def kill(self):
         super().kill()
-
-        self.game.wave.enemy_killed()
-
+        self.game.wave.is_killed()
         if self.rect.x > 1:
             self.game.level.money += self.money

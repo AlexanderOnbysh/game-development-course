@@ -1,5 +1,5 @@
 from internal.configurable import Configurable
-from internal.wave import Wave
+from internal.enemy_wave import EnemyWave
 from internal.route_searching import RouteSearching
 from pygame.sprite import OrderedUpdates
 from internal.collision import Collision
@@ -34,10 +34,10 @@ class Level:
             self.configures.add(obj)
 
             if hasattr(obj, "block"):
-                self.collision.block_rect(int(args[1]), int(args[2]), obj.rect.width - 1, obj.rect.height - 1)
+                self.collision.block_tile(int(args[1]), int(args[2]), obj.rect.width - 1, obj.rect.height - 1)
 
         self.route_find.setup(30)
-        self.wave = Wave(self.game, 1)
+        self.wave = EnemyWave(self.game, 1)
         self.lives = 20
         self.money = 600
         self.time = 0

@@ -1,13 +1,15 @@
 import pygame
+from typing import Tuple
 
 
 class Window:
-    def __init__(self, width: int, height: int):
-        self.resolution = (width, height)
+    def __init__(self, resolution: Tuple[int, int]):
+        self.resolution = resolution
         self.screen = pygame.display.set_mode(self.resolution)
         self.set_background(0, 0, 0)
 
-    def set_title(self, title):
+    @staticmethod
+    def set_title(title):
         pygame.display.set_caption(title)
 
     def set_background(self, r, g, b):

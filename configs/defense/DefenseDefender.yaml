@@ -1,12 +1,12 @@
-display_name: Artillery
+display_name: Defender
 block: true
-cost: 450
+cost: 250
 rotate: true
 flash_offset: 32
 attack: bullet
 bullet_type: AttackSmallBullet
-attack_rate: 2
+attack_rate: 0.5
 attack_range: 600
 explosion_radius: 70
 explosion_damage: 200
-images: images/defense/DefenseArtillery.png
+images: images/defense/DefenseDefender.png

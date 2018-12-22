@@ -1,5 +1,5 @@
 speed: 2
-damage: 15
+damage: 20
 image:
   type: aimg
   value: images/attack/AttackBlueBullet.png

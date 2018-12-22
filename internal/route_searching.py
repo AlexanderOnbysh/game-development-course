@@ -21,7 +21,7 @@ class RouteSearching:
             attempts -= 1
 
             y = random.randint(0, cells - 1) * self.collision.tile_size
-            if not self.collision.point_blocked(x - 32, y):
+            if not self.collision.is_blocked(x - 32, y):
                 return x, y
 
         return x, random.randint(0, cells - 1) * self.collision.tile_size
@@ -162,10 +162,10 @@ class Route:
         x_diff = range(position[0] - self.res, position[0] + self.res + 1, self.res)
         y_diff = range(position[1] - self.res, position[1] + self.res + 1, self.res)
 
-        return [(x, y) for x in x_diff for y in y_diff if (x, y) != position and (x == position[0] or y == position[1] or self.can_use_diagonal(position, (x, y))) and not self.collision.point_blocked(x, y)]
+        return [(x, y) for x in x_diff for y in y_diff if (x, y) != position and (x == position[0] or y == position[1] or self.can_use_diagonal(position, (x, y))) and not self.collision.is_blocked(x, y)]
         
     def can_use_diagonal(self, a, b):
-        return not self.collision.point_blocked(b[0], a[1]) and not self.collision.point_blocked(a[0], b[1])
+        return not self.collision.is_blocked(b[0], a[1]) and not self.collision.is_blocked(a[0], b[1])
 
     def get_cost(self, a, b):
         base = 3 if a[0] == b[0] or a[1] == b[1] else 4

@@ -33,7 +33,7 @@ class Bullet(Configurable):
         if self.life < self.current_life:
             self.kill()
 
-        if self.current_life > 0.03 and self.game.level.collision.point_blocked(self.rect.centerx, self.rect.centery):
+        if self.current_life > 0.03 and self.game.level.collision.is_blocked(self.rect.centerx, self.rect.centery):
             self.kill()
 
         for enemy in self.game.wave.enemies:
@@ -42,6 +42,6 @@ class Bullet(Configurable):
             sqr_magnitude = (dx ** 2) + (dy ** 2)
 
             if sqr_magnitude < (enemy.rect.width / 2) ** 2:
-                enemy.take_damage(self.damage)
+                enemy.make_damage(self.damage)
                 self.kill()
                 return

@@ -2,7 +2,6 @@ import math
 
 from internal.configurable import Configurable
 from internal.bullet import Bullet
-from internal.explosion import Explosion
 
 class Defense(Configurable):
     def __init__(self, game, name, x, y):
@@ -18,6 +17,9 @@ class Defense(Configurable):
             self.rect.x = x
             self.rect.y = y
 
+        if hasattr(self, "block"):
+            self.game.level.collision.block_tile(x, y, self.rect.width, self.rect.height)
+
     def update(self, delta):
         if self.attack == 'none':
             return
@@ -31,8 +33,6 @@ class Defense(Configurable):
             if target is not None and target != self.rect.center:
                 if self.attack == "bullet":
                     self.game.bullets.add(Bullet(self.game, self.rect.center, target, self.bullet_type))
-                elif self.attack == "explosion":
-                    self.game.explosions.add(Explosion(self.game, target, self.explosion_radius, self.explosion_damage))
                 if hasattr(self, 'flash_offset'):
                     self.game.explosions.add(DefenseLight(self.rect.center, target, self.flash_offset))
 
