@@ -7,8 +7,8 @@ from internal.configurable import Configurable
 
 
 class Bullet(Configurable):
-    def __init__(self, game, origin, target):
-        super().__init__("AttackBullet", origin[0], origin[1])
+    def __init__(self, game, origin, target, bullet_type):
+        super().__init__(bullet_type, origin[0], origin[1])
         self.game = game
 
         dx = target[0] - origin[0]
