@@ -4,4 +4,4 @@ speed: 45
 money: 200
 image:
   type: aimg
-  value: images/default.png
+  value: images/enemy/EnemyLarge.png

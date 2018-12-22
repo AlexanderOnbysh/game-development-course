@@ -5,4 +5,4 @@ rotate: false
 attack: none
 image:
   type: aimg
-  value: images/default.png  # TODO: change png file
+  value: images/defense/DefenseWall.png

@@ -4,6 +4,7 @@ cost: 280
 rotate: true
 flash_offset: 16
 attack: bullet
+bullet_type: AttackSmallBullet
 attack_rate: 0.1
 attack_range: 200
-images: images/default.png  # TODO: change png file
+images: images/defense/DefensePillbox.png

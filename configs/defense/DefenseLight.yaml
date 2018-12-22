@@ -1,4 +1,4 @@
 anim_count: 2
-anim_source: images/default.png  # TODO: change png file
-anim_rate: 0.1
+anim_source: images/defense/light/DefenseLight-
+anim_rate: 0.01
 anim_loop: false

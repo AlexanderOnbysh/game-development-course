@@ -30,7 +30,11 @@ class Level:
         self.route_find = RouteSearching(self.game, self.collision)
 
         for args in self.data:
-            self.configures.add(Configurable(args[0], int(args[1]), int(args[2])))
+            obj = Configurable(args[0], int(args[1]), int(args[2]))
+            self.configures.add(obj)
+
+            if hasattr(obj, "block"):
+                self.collision.block_rect(int(args[1]), int(args[2]), obj.rect.width - 1, obj.rect.height - 1)
 
         self.route_find.setup(30)
         self.wave = Wave(self.game, 1)
